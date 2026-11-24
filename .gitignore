@@ -1,0 +1,9 @@
+# Ignore cluster output and error logs
+*.out
+*.err
+*.log
+
+# Ignore compiled binaries
+a.out
+*.o
+*.exe
