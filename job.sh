@@ -1,17 +1,33 @@
 #!/bin/bash
-#SBATCH --job-name=locality_job       # Job name
-#SBATCH --nodes=1                     # Number of nodes
-#SBATCH --ntasks=1                    # Number of CPU cores
-#SBATCH --time=01:00:00               # Time limit
-#SBATCH --output=locality_%j.out      # Output log
+#PBS -N bruck_allgather
+#PBS -l nodes=4:ppn=4
+#PBS -l walltime=00:10:00
+#PBS -j oe
 
-# 1. Load any necessary modules (e.g., gcc, python, mpi)
-# module load gcc/9.3.0
+LOG=/home/student4/BT2024135/locality/logs/run.${PBS_JOBID}.log
+exec > "$LOG" 2>&1
 
-# 2. Move into your specific locality folder
-cd ~/BT2024135/locality
+echo "=== job started $(date) ==="
+echo "hostname: $(hostname)"
+echo "user:     $(whoami)"
+echo "---"
 
-# 3. Run your code
-echo "Starting job on $(hostname)"
-# Example for C: gcc my_code.c -o my_program && ./my_program
-echo "Job finished!"
+cd /home/student4/BT2024135/locality || exit 2
+module load mpi/openmpi-2.1.1
+
+echo "POST PATH: $PATH"
+echo "POST LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
+echo "which orted: $(which orted)"
+echo "--- starting mpirun ---"
+
+mpirun --prefix /opt/apps/mpi/openmpi-2.1.1 \
+       -x LD_LIBRARY_PATH \
+       --mca plm_rsh_agent /bin/ssh \
+       --mca orte_base_help_aggregate 0 \
+       --hostfile "$PBS_NODEFILE" \
+       -np 16 \
+       ./build/bruck_allgather
+RC=$?
+
+echo "=== mpirun finished $(date), rc=$RC ==="
+exit $RC

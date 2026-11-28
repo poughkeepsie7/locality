@@ -272,6 +272,10 @@ int allgather_loc_bruck(const void *sendbuf, int sendcount, MPI_Datatype sendtyp
     MPI_Comm_rank(comm->local_comm, &local_rank);
     MPI_Comm_size(comm->local_comm, &PPN);
 
+    if (PPN == 1)
+        return allgather_bruck(sendbuf, sendcount, sendtype, recvbuf, recvcount,
+                recvtype, comm->global_comm);
+
     int local_node = rank / PPN;
     int num_nodes = num_procs / PPN;
 
@@ -280,42 +284,53 @@ int allgather_loc_bruck(const void *sendbuf, int sendcount, MPI_Datatype sendtyp
     // Perform Local Allgather
     allgather_bruck(sendbuf, sendcount, sendtype, recvbuf, recvcount, recvtype, comm->local_comm);
 
-    // Perform allgather with PPN nodes at once
-    // First send to node - (1 to PPN) nodes and recv from node + (1 to PPN) nodes
-    // Local rank 0 sends to node-1, local rank 1 sends to node-2, etc
-    // Local rank 0 recvs from node+1, local rank 1 recvs from node+2, etc
-    int stride, size, dist;
-    int send_proc, recv_proc, recv_pos;
-    int num_steps = (log2(num_nodes)-1)/log2(PPN) + 1;
-
+    // Each inter-node round expands the known group by up to PPN.
+    int nodes_known = 1;
     MPI_Request requests[2];
-
-    stride = PPN;
-    for (int i = 0; i < num_steps; i++)
+    while (nodes_known < num_nodes)
     {
-        // bruck : send to 1 away, then 2 away, then 4 away, etc
-        size = sendcount * stride;
-        dist = local_rank * stride;
+        const int remaining = (num_nodes - 1) / nodes_known + 1;
+        const int lanes = remaining < PPN ? remaining : PPN;
+        const int stride = PPN * nodes_known;
+        const int count = recvcount * stride;
+        const int dist = local_rank * stride;
+        const int offset = local_rank * count * recv_size;
 
-        send_proc = rank - dist;
-        if (send_proc < 0) send_proc += num_procs;
-        recv_proc = rank + dist;
-        if (recv_proc >= num_procs) recv_proc -= num_procs;
-
-        recv_pos = size * local_rank;
-        if (local_rank)
+        if (local_rank > 0 && local_rank < lanes)
         {
-            MPI_Isend(recv_buffer, size, sendtype, send_proc, tag, comm->global_comm, &(requests[0]));
-            MPI_Irecv(&(recv_buffer[recv_pos*recv_size]), size, sendtype, recv_proc, tag, comm->global_comm, &(requests[1]));
+            const int send_proc = (rank - dist + num_procs) % num_procs;
+            const int recv_proc = (rank + dist) % num_procs;
+            const int remaining_nodes = num_nodes - local_rank * nodes_known;
+            const int recv_nodes = remaining_nodes < nodes_known ? remaining_nodes : nodes_known;
+            const int block_count = recv_nodes * PPN * recvcount;
+            MPI_Irecv(recv_buffer + offset, block_count, recvtype, recv_proc,
+                    tag, comm->global_comm, &requests[0]);
+            MPI_Isend(recv_buffer, block_count, recvtype, send_proc,
+                    tag, comm->global_comm, &requests[1]);
             MPI_Waitall(2, requests, MPI_STATUSES_IGNORE);
         }
 
-
-        allgather_bruck(&(recv_buffer[recv_pos*recv_size]), size, recvtype, recvbuf, size, recvtype, comm->local_comm);
-
-        stride *= PPN;
+        if (remaining >= PPN && num_nodes >= nodes_known * PPN)
+        {
+            allgather_bruck(recv_buffer + offset, count, recvtype,
+                    recvbuf, count, recvtype, local_comm);
+        }
+        else
+        {
+            // A partial final round has fewer blocks than local ranks.
+            int counts[PPN], displacements[PPN];
+            for (int lane = 0; lane < PPN; ++lane)
+            {
+                const int remaining_nodes = num_nodes - lane * nodes_known;
+                const int block_nodes = remaining_nodes < nodes_known ? remaining_nodes : nodes_known;
+                counts[lane] = block_nodes > 0 ? block_nodes * PPN * recvcount : 0;
+                displacements[lane] = counts[lane] ? lane * count : 0;
+            }
+            MPI_Allgatherv(MPI_IN_PLACE, 0, recvtype, recvbuf,
+                    counts, displacements, recvtype, local_comm);
+        }
+        nodes_known *= lanes;
     }
-
 
     if (local_node)
         rotate(recv_buffer, 
@@ -527,7 +542,3 @@ int allgather_mult_hier_bruck(const void *sendbuf, int sendcount, MPI_Datatype s
 
     free(tmpbuf);
 }
-
-
-
-

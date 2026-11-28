@@ -17,10 +17,15 @@ int main(int argc, char* argv[])
 
     MPIX_Comm* locality_comm;
     MPIX_Comm_init(&locality_comm, MPI_COMM_WORLD);
+    MPIX_Comm_topo_init(locality_comm);
+    if (rank == 0) {
+    	printf("topo: ppn=%d nodes=%d rank_node=%d\n", locality_comm->ppn, locality_comm->num_nodes,locality_comm->rank_node);
+    	fflush(stdout);
+	}
 
     int max_i = 5;
     int max_s = pow(2, max_i);
-    int n_iter = 100;
+    int n_iter = 1000;
     double t0, tfinal;
     srand(time(NULL));
     std::vector<double> local_data(max_s);

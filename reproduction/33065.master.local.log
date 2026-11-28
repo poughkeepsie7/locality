@@ -1,0 +1,265 @@
+Job 33065.master.local
+     32 compute00.local
+# The following is the parsable format, which can be fed to other
+# programs. Each different item in every column has an unique ID
+# starting from zero.
+# CPU,Core,Socket
+0,0,0
+1,1,0
+2,2,0
+3,3,0
+4,4,0
+5,5,0
+6,6,0
+7,7,0
+8,8,0
+9,9,0
+10,10,1
+11,11,1
+12,12,1
+13,13,1
+14,14,1
+15,15,1
+16,16,1
+17,17,1
+18,18,1
+19,19,1
+20,0,0
+21,1,0
+22,2,0
+23,3,0
+24,4,0
+25,5,0
+26,6,0
+27,7,0
+28,8,0
+29,9,0
+30,10,1
+31,11,1
+32,12,1
+33,13,1
+34,14,1
+35,15,1
+36,16,1
+37,17,1
+38,18,1
+39,19,1
+mpirun (Open MPI) 2.1.1
+
+Report bugs to http://www.open-mpi.org/community/help/
+START,1,4
+--------------------------------------------------------------------------
+WARNING: a request was made to bind a process. While the system
+supports binding the process itself, at least one node does NOT
+support binding memory to the process location.
+
+  Node:  compute00
+
+Open MPI uses the "hwloc" library to perform process and memory
+binding. This error message means that hwloc has indicated that
+processor binding support is not available on this machine.
+
+On OS X, processor and memory binding is not available at all (i.e.,
+the OS does not expose this functionality).
+
+On Linux, lack of the functionality can mean that you are on a
+platform where processor and memory affinity is not supported in Linux
+itself, or that hwloc was built without NUMA and/or processor affinity
+support. When building hwloc (which, depending on your Open MPI
+installation, may be embedded in Open MPI itself), it is important to
+have the libnuma header and library files available. Different linux
+distributions package these files under different names; look for
+packages with the word "numa" in them. You may also need a developer
+version of the package (e.g., with "dev" or "devel" in the name) to
+obtain the relevant header files.
+
+If you are getting this message on a non-OS X, non-Linux platform,
+then hwloc does not support processor / memory affinity on this
+platform. If the OS/platform does actually support processor / memory
+affinity, then you should contact the hwloc maintainers:
+https://github.com/open-mpi/hwloc.
+
+This is a warning only; your job will continue, though performance may
+be degraded.
+--------------------------------------------------------------------------
+RESULT,1,4,1,1,MPI,1.50576233864e-06
+RESULT,1,4,1,1,Bruck,1.58191099763e-06
+RESULT,1,4,1,1,Locality,1.58658623695e-06
+RESULT,1,4,1,1,Hierarchical,1.99773907661e-06
+RESULT,1,4,1,1,Multi-lane,1.79823115468e-06
+RESULT,1,4,1,2,Bruck,1.47552229464e-06
+RESULT,1,4,1,2,Locality,1.5337113291e-06
+RESULT,1,4,1,2,Hierarchical,1.92910060287e-06
+RESULT,1,4,1,2,Multi-lane,1.78381428123e-06
+RESULT,1,4,1,2,MPI,1.33543647826e-06
+RESULT,1,4,1,3,Locality,1.454975456e-06
+RESULT,1,4,1,3,Hierarchical,1.83137878776e-06
+RESULT,1,4,1,3,Multi-lane,1.70354917645e-06
+RESULT,1,4,1,3,MPI,1.36260688305e-06
+RESULT,1,4,1,3,Bruck,1.36003643274e-06
+RESULT,1,4,1,4,Hierarchical,1.79410725832e-06
+RESULT,1,4,1,4,Multi-lane,1.60081870854e-06
+RESULT,1,4,1,4,MPI,1.27395242453e-06
+RESULT,1,4,1,4,Bruck,1.32456980646e-06
+RESULT,1,4,1,4,Locality,1.38169154525e-06
+RESULT,1,4,1,5,Multi-lane,1.61102041602e-06
+RESULT,1,4,1,5,MPI,1.26992724836e-06
+RESULT,1,4,1,5,Bruck,1.26183778048e-06
+RESULT,1,4,1,5,Locality,1.31556205451e-06
+RESULT,1,4,1,5,Hierarchical,1.67768076062e-06
+RESULT,1,4,1,6,MPI,1.21058896184e-06
+RESULT,1,4,1,6,Bruck,1.28457695246e-06
+RESULT,1,4,1,6,Locality,1.29696726799e-06
+RESULT,1,4,1,6,Hierarchical,1.64293125272e-06
+RESULT,1,4,1,6,Multi-lane,1.45876966417e-06
+RESULT,1,4,1,7,Bruck,1.18915177882e-06
+RESULT,1,4,1,7,Locality,1.24558992684e-06
+RESULT,1,4,1,7,Hierarchical,1.6080327332e-06
+RESULT,1,4,1,7,Multi-lane,1.47730112076e-06
+RESULT,1,4,1,7,MPI,1.16548500955e-06
+VERIFIED,1,4
+DONE,1,4
+START,1,16
+--------------------------------------------------------------------------
+WARNING: a request was made to bind a process. While the system
+supports binding the process itself, at least one node does NOT
+support binding memory to the process location.
+
+  Node:  compute00
+
+Open MPI uses the "hwloc" library to perform process and memory
+binding. This error message means that hwloc has indicated that
+processor binding support is not available on this machine.
+
+On OS X, processor and memory binding is not available at all (i.e.,
+the OS does not expose this functionality).
+
+On Linux, lack of the functionality can mean that you are on a
+platform where processor and memory affinity is not supported in Linux
+itself, or that hwloc was built without NUMA and/or processor affinity
+support. When building hwloc (which, depending on your Open MPI
+installation, may be embedded in Open MPI itself), it is important to
+have the libnuma header and library files available. Different linux
+distributions package these files under different names; look for
+packages with the word "numa" in them. You may also need a developer
+version of the package (e.g., with "dev" or "devel" in the name) to
+obtain the relevant header files.
+
+If you are getting this message on a non-OS X, non-Linux platform,
+then hwloc does not support processor / memory affinity on this
+platform. If the OS/platform does actually support processor / memory
+affinity, then you should contact the hwloc maintainers:
+https://github.com/open-mpi/hwloc.
+
+This is a warning only; your job will continue, though performance may
+be degraded.
+--------------------------------------------------------------------------
+RESULT,1,16,0,1,MPI,3.31613048911e-06
+RESULT,1,16,0,1,Bruck,3.64121422172e-06
+RESULT,1,16,0,1,Locality,3.64216603339e-06
+RESULT,1,16,0,1,Hierarchical,4.55251336098e-06
+RESULT,1,16,0,1,Multi-lane,4.27434034646e-06
+RESULT,1,16,0,2,Bruck,3.56033630669e-06
+RESULT,1,16,0,2,Locality,3.6348477006e-06
+RESULT,1,16,0,2,Hierarchical,4.26751002669e-06
+RESULT,1,16,0,2,Multi-lane,4.2031314224e-06
+RESULT,1,16,0,2,MPI,3.13804671168e-06
+RESULT,1,16,0,3,Locality,3.51409800351e-06
+RESULT,1,16,0,3,Hierarchical,4.18455339968e-06
+RESULT,1,16,0,3,Multi-lane,4.15292195976e-06
+RESULT,1,16,0,3,MPI,3.03111225367e-06
+RESULT,1,16,0,3,Bruck,3.45346145332e-06
+RESULT,1,16,0,4,Hierarchical,4.01057861745e-06
+RESULT,1,16,0,4,Multi-lane,4.14384528995e-06
+RESULT,1,16,0,4,MPI,3.03099490702e-06
+RESULT,1,16,0,4,Bruck,3.42476181686e-06
+RESULT,1,16,0,4,Locality,3.50179150701e-06
+RESULT,1,16,0,5,Multi-lane,4.14096936584e-06
+RESULT,1,16,0,5,MPI,3.03694047034e-06
+RESULT,1,16,0,5,Bruck,3.41354869306e-06
+RESULT,1,16,0,5,Locality,3.50119359791e-06
+RESULT,1,16,0,5,Hierarchical,4.00733575225e-06
+RESULT,1,16,0,6,MPI,3.01350653172e-06
+RESULT,1,16,0,6,Bruck,3.4169908613e-06
+RESULT,1,16,0,6,Locality,3.49204987288e-06
+RESULT,1,16,0,6,Hierarchical,3.98570112884e-06
+RESULT,1,16,0,6,Multi-lane,4.13857214153e-06
+RESULT,1,16,0,7,Bruck,3.41085530818e-06
+RESULT,1,16,0,7,Locality,3.48934531212e-06
+RESULT,1,16,0,7,Hierarchical,4.00336459279e-06
+RESULT,1,16,0,7,Multi-lane,4.14319336414e-06
+RESULT,1,16,0,7,MPI,3.01742367446e-06
+VERIFIED,1,16
+DONE,1,16
+START,1,32
+--------------------------------------------------------------------------
+WARNING: a request was made to bind a process. While the system
+supports binding the process itself, at least one node does NOT
+support binding memory to the process location.
+
+  Node:  compute00
+
+Open MPI uses the "hwloc" library to perform process and memory
+binding. This error message means that hwloc has indicated that
+processor binding support is not available on this machine.
+
+On OS X, processor and memory binding is not available at all (i.e.,
+the OS does not expose this functionality).
+
+On Linux, lack of the functionality can mean that you are on a
+platform where processor and memory affinity is not supported in Linux
+itself, or that hwloc was built without NUMA and/or processor affinity
+support. When building hwloc (which, depending on your Open MPI
+installation, may be embedded in Open MPI itself), it is important to
+have the libnuma header and library files available. Different linux
+distributions package these files under different names; look for
+packages with the word "numa" in them. You may also need a developer
+version of the package (e.g., with "dev" or "devel" in the name) to
+obtain the relevant header files.
+
+If you are getting this message on a non-OS X, non-Linux platform,
+then hwloc does not support processor / memory affinity on this
+platform. If the OS/platform does actually support processor / memory
+affinity, then you should contact the hwloc maintainers:
+https://github.com/open-mpi/hwloc.
+
+This is a warning only; your job will continue, though performance may
+be degraded.
+--------------------------------------------------------------------------
+RESULT,1,32,0,1,MPI,8.46009310335e-05
+RESULT,1,32,0,1,Bruck,5.69712556899e-06
+RESULT,1,32,0,1,Locality,5.81196509302e-06
+RESULT,1,32,0,1,Hierarchical,7.29787349701e-06
+RESULT,1,32,0,1,Multi-lane,7.12306424975e-06
+RESULT,1,32,0,2,Bruck,5.69835118949e-06
+RESULT,1,32,0,2,Locality,5.80136664212e-06
+RESULT,1,32,0,2,Hierarchical,7.2995275259e-06
+RESULT,1,32,0,2,Multi-lane,7.13884085417e-06
+RESULT,1,32,0,2,MPI,5.26239909232e-06
+RESULT,1,32,0,3,Locality,5.81928156316e-06
+RESULT,1,32,0,3,Hierarchical,7.29963742197e-06
+RESULT,1,32,0,3,Multi-lane,7.11691938341e-06
+RESULT,1,32,0,3,MPI,5.23908808827e-06
+RESULT,1,32,0,3,Bruck,5.70279918611e-06
+RESULT,1,32,0,4,Hierarchical,7.28249177337e-06
+RESULT,1,32,0,4,Multi-lane,7.12254270911e-06
+RESULT,1,32,0,4,MPI,5.31032495201e-06
+RESULT,1,32,0,4,Bruck,5.72470203042e-06
+RESULT,1,32,0,4,Locality,5.72741404176e-06
+RESULT,1,32,0,5,Multi-lane,7.05806352198e-06
+RESULT,1,32,0,5,MPI,5.23941963911e-06
+RESULT,1,32,0,5,Bruck,5.70659153163e-06
+RESULT,1,32,0,5,Locality,5.74866682291e-06
+RESULT,1,32,0,5,Hierarchical,7.18891061842e-06
+RESULT,1,32,0,6,MPI,5.13821654022e-06
+RESULT,1,32,0,6,Bruck,5.56789152324e-06
+RESULT,1,32,0,6,Locality,5.65901771188e-06
+RESULT,1,32,0,6,Hierarchical,7.14029185474e-06
+RESULT,1,32,0,6,Multi-lane,7.00449757278e-06
+RESULT,1,32,0,7,Bruck,5.51651604474e-06
+RESULT,1,32,0,7,Locality,5.65695390105e-06
+RESULT,1,32,0,7,Hierarchical,7.07411766052e-06
+RESULT,1,32,0,7,Multi-lane,6.96506351233e-06
+RESULT,1,32,0,7,MPI,5.08668646216e-06
+VERIFIED,1,32
+DONE,1,32

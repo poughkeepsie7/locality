@@ -7,3 +7,18 @@
 a.out
 *.o
 *.exe
+
+# Retain the verified PBS inputs used to regenerate Figures 9 and 10
+!/reproduction/33064.master.local.log
+!/reproduction/33065.master.local.log
+!/reproduction/33068.master.local.log
+!/reproduction/33069.master.local.log
+
+# Local build products, generated PBS wrappers, and scratch files
+/build/
+/reproduction/runs/
+/reproduction/job_*.pbs
+/job_*ppn*.sh
+*.bak
+/.venv/
+__pycache__/
